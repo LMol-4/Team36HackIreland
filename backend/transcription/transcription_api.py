@@ -1,9 +1,9 @@
 from flask import Blueprint, request, jsonify
 import os
 import tempfile
+from get_transcription import get_transcription  # new helper that combines audio extraction & transcription
 
 transcription = Blueprint("transcription", __name__)
-
 
 @transcription.route("/transcribe", methods=["POST"])
 def transcribe():
@@ -16,11 +16,9 @@ def transcribe():
         video_file.save(video_path)
 
     try:
-        # get transcription
-        transcription_text = "example transcription"
+        transcription_text = get_transcription(video_path)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
     finally:
         os.remove(video_path)
 
