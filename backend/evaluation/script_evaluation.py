@@ -82,7 +82,7 @@ def evaluate_pitch(pitch_text, pitch_type):
     prompt = create_prompt(pitch_text, pitch_type)
     try:
         completion = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant that evaluates pitch quality."},
                 {"role": "user", "content": prompt}
