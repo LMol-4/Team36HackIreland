@@ -103,6 +103,10 @@ def evaluate_pitch(pitch_text, pitch_type):
         print(f"Error evaluating pitch: {e}")
         sys.exit(1)
 
+
+def get_feedback(transcripton: str, pitch_type: str):
+    return evaluate_pitch(transcripton, pitch_type)
+
 def main():
     parser = argparse.ArgumentParser(description="Evaluate a pitch using OpenAI API.")
     group = parser.add_mutually_exclusive_group(required=True)
