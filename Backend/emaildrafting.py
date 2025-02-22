@@ -4,8 +4,8 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
-# Construct the path to the 'apikeys.env' file which is located in the main directory
-env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'apikeys.env')
+# Construct the path to the '.env' file which is located in the main directory
+env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
 load_dotenv(env_path)  
 api_key = os.getenv("OPENAI_API_KEY")
 
