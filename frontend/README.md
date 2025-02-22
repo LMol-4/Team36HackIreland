@@ -10,4 +10,4 @@
 
 ### Running
 
-1. Run `yarn run preview`
+1. Run `yarn dev`
