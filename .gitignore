@@ -10,7 +10,8 @@ __pycache__/
 *.json
 *.mp4
 *.mp3
-transcription.txt
+text*.txt
+*transcript*.txt
 
 # Distribution / packaging
 .Python

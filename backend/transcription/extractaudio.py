@@ -2,7 +2,7 @@
 import sys
 from moviepy import VideoFileClip
 
-def extract_audio(video_file, output_audio):
+def extract_audio_from_file(video_file, output_audio):
     try:
         clip = VideoFileClip(video_file)
         clip.audio.write_audiofile(output_audio)
@@ -17,4 +17,4 @@ if __name__ == "__main__":
         sys.exit(1)
     video_file = sys.argv[1]
     output_audio = sys.argv[2]
-    extract_audio(video_file, output_audio)
+    extract_audio_from_file(video_file, output_audio)
