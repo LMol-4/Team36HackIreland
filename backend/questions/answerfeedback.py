@@ -24,8 +24,6 @@ def judge_responses(questions, answers):
         "Evaluation Criteria if applicable:",
         "- Clarity and Precision: Is the response clear, jargon-free, and concise?",
         "- Market and Business Insight: Does it demonstrate a solid understanding of the target market, customer needs, and competitive landscape?",
-        "- Execution and Team Capabilities: Are the team strengths, operational strategy, and overall execution plan effectively communicated?",
-        "- Financial Acumen: Are the financial projections realistic, with a proper assessment of risks and revenue generation?",
         "- Passion and Vision: Does the answer convey genuine commitment, a clear long-term vision, and enthusiasm for the idea?",
         "- Adaptability and Problem-Solving: Does it show responsiveness to feedback and a strong capability for overcoming challenges?"
     ]

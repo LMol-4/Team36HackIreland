@@ -24,14 +24,13 @@ def generate_questions(transcript):
 
     prompt = (
         "Based on the following pitch transcript, generate a numbered list of 10 highly relevant and insightful questions "
-        "that experienced investors or a panel of judges might ask the presenter. The questions should critically assess key aspects of the business, focusing on the following dimensions:\n\n"
+        "that experienced investors or a panel of judges might ask the presenter. The questions should critically assess key aspects of the business, focusing on the following dimensions if applicable:\n\n"
         "1. Business Model: Revenue streams, cost structure, and value proposition.\n"
         "2. Scalability: Growth potential, operational constraints, and market demand.\n"
         "3. Market Validation: Customer adoption, traction, and product-market fit.\n"
         "4. Competitive Landscape: Differentiation, barriers to entry, and threats from incumbents.\n"
         "5. Financial Projections: Revenue forecasts, cost assumptions, and funding needs.\n"
         "6. Risk Management: Identifiable risks, contingency plans, and regulatory considerations.\n"
-        "7. Execution Strategy: Team expertise, go-to-market strategy, and operational efficiency.\n\n"
         f"{transcript}\n\n"
         "Each question should demonstrate a deep understanding of the pitch, critically examine both strengths and potential weaknesses, "
         "and challenge the presenter to substantiate their claims with data, market insights, or strategic foresight."

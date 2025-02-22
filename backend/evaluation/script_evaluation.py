@@ -44,18 +44,27 @@ def create_prompt(pitch_text, pitch_type):
     if pitch_type.lower() == "hackathon":
         criteria_text = (
             "Evaluate the pitch based on the following hackathon criteria:\n"
-            "- Problem Definition & Relevance: How clearly is the problem defined and its relevance explained?\n"
+            "- Problem Definition & Relevance: How clearly is the problem defined and its relevance to the track explained?\n"
             "- Innovation & Creativity: Assess the uniqueness and creativity of the idea.\n"
             "- Technical Feasibility & Execution: Evaluate the quality, practicality, and execution of the prototype or demo.\n"
             "- Impact & Scalability: Determine the potential impact and scalability of the solution.\n"
         )
     elif pitch_type.lower() in ["pitchdeck", "pitch deck"]:
         criteria_text = (
-            "As an experienced venture capitalist, evaluate the following business pitch based on these criteria:\n"
-            "- Problem & Solution Clarity: Assess how clearly the market problem is defined and how compelling the proposed solution is.\n"
-            "- Market Opportunity & Business Model: Evaluate the market size, target audience, revenue streams, and competitive landscape.\n"
-            "- Team & Execution Capability: Consider the experience and execution ability of the founding team.\n"
+            "As an experienced venture capitalist, evaluate the following business pitch based on these criteria if relevant:\n\n"
+            "1. Problem & Solution Clarity:\n"
+            "   - How clearly is the market problem defined?\n"
+            "   - Is the proposed solution innovative, scalable, and compelling?\n\n"
+            "2. Market Opportunity & Business Model:\n"
+            "   - Assess the size, growth potential, and segmentation of the target market.\n"
+            "3. Traction & Financial Performance:\n"
+            "   - Review key performance indicators, early customer adoption, and revenue trends.\n"
+            "4. Competitive Advantage & Risks:\n"
+            "   - Determine the startup’s unique value proposition and defensibility (competitive moat).\n"
+            "   - Identify potential risks and the team’s strategies for risk mitigation.\n\n"
+            "Please provide a thorough, data-driven analysis with clear justification for each criterion used."
         )
+
     else:
         criteria_text = "Unknown pitch type. Please choose either 'hackathon' or 'pitch deck'."
 
