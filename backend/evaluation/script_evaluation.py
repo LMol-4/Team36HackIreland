@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import os
 import sys
 import json
@@ -6,7 +5,6 @@ import argparse
 from dotenv import load_dotenv
 from openai import OpenAI
 
-# Load the API key from the .env file in the root directory.
 root_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 dotenv_path = os.path.join(root_dir, ".env")
 load_dotenv(dotenv_path)
@@ -16,7 +14,6 @@ if not openai_api_key:
     print("Error: OPENAI_API_KEY not found in .env file.")
     sys.exit(1)
 
-# Instantiate the client using the new API syntax.
 client = OpenAI(api_key=openai_api_key)
 
 def load_pitch_text(args):
@@ -33,7 +30,7 @@ def load_pitch_text(args):
             print(f"Error reading file: {e}")
             sys.exit(1)
     else:
-        print("No pitch text provided. Use --input_text or --file.")
+        print("No pitch text provided.")
         sys.exit(1)
 
 def create_prompt(pitch_text, pitch_type):
@@ -99,7 +96,7 @@ def evaluate_pitch(pitch_text, pitch_type):
             temperature=0.7,
             max_tokens=2000,
         )
-        # Access the message content from the new API response format.
+        
         result_text = completion.choices[0].message.content.strip()
         try:
             result_json = json.loads(result_text)
@@ -115,59 +112,3 @@ def evaluate_pitch(pitch_text, pitch_type):
 
 def get_feedback(transcripton: str, pitch_type: str):
     return evaluate_pitch(transcripton, pitch_type)
-
-def main():
-    parser = argparse.ArgumentParser(description="Evaluate a pitch using OpenAI API.")
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--input_text", type=str, help="Pitch text input directly.")
-    group.add_argument("--file", type=str, help="Path to a file containing the pitch text.")
-    parser.add_argument("--type", type=str, required=True, choices=["hackathon", "pitchdeck", "pitch deck"],
-                        help="Type of pitch: 'hackathon' or 'pitch deck'.")
-    parser.add_argument("--json_output", action="store_true", help="Output JSON evaluation to a file.")
-    parser.add_argument("--output_file", type=str, help="File path to write the JSON output to.")
-    parser.add_argument("--summary_output", action="store_true", help="Print a formatted summary output for human readability.")
-    args = parser.parse_args()
-
-    pitch_text = load_pitch_text(args)
-    evaluation = evaluate_pitch(pitch_text, args.type)
-
-    # If json_output flag is set, write the evaluation JSON to a file if an output file path is provided.
-    if args.json_output:
-        json_str = json.dumps(evaluation, indent=4)
-        if args.output_file:
-            try:
-                with open(args.output_file, "w", encoding="utf-8") as f:
-                    f.write(json_str)
-                print(f"JSON output written to {args.output_file}")
-            except Exception as e:
-                print(f"Error writing JSON to file: {e}")
-                sys.exit(1)
-        else:
-            # If no output file is specified, print the JSON to the terminal.
-            print(json_str)
-
-    if args.summary_output:
-        print("\nFormatted Summary:")
-        print("Score: ", evaluation.get("score"))
-        print("\nStrengths:")
-        for s in evaluation.get("strengths", []):
-            print("-", s)
-        print("\nAreas for Improvement:")
-        for a in evaluation.get("areas_for_improvement", []):
-            print("-", a)
-        print("\nSuggestions:")
-        for s in evaluation.get("suggestions", []):
-            print("-", s)
-        print("\nLine References:")
-        for ref in evaluation.get("line_references", []):
-            print("-", ref)
-        print("\nSummary:")
-        print(evaluation.get("summary"))
-
-    # If neither json_output nor summary_output is set, print a basic summary.
-    if not args.json_output and not args.summary_output:
-        print("Score: ", evaluation.get("score"))
-        print("Summary: ", evaluation.get("summary"))
-
-if __name__ == "__main__":
-    main()

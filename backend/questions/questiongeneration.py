@@ -4,7 +4,7 @@ import tempfile
 from flask import Blueprint, request, jsonify
 from dotenv import load_dotenv
 from openai import OpenAI
-from transcription.get_transcription import get_transcription  # Helper for audio extraction & transcription
+from transcription.get_transcription import get_transcription
 
 question_generation = Blueprint("question_generation", __name__)
 
@@ -13,18 +13,16 @@ def generate_questions(transcript: str) -> str:
     Given a pitch transcript, uses the GPT-4o-mini model to generate a JSON-formatted
     numbered list of 10 questions that investors or judges might ask.
     """
-    # Load the .env file from the root directory (one level up)
+
     root_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
     dotenv_path = os.path.join(root_dir, ".env")
     load_dotenv(dotenv_path)
 
-    # Retrieve the OpenAI API key from the .env file
     openai_api_key = os.getenv("OPENAI_API_KEY")
     if not openai_api_key:
         print("Error: OPENAI_API_KEY not found in .env file.")
         sys.exit(1)
 
-    # Initialize the OpenAI client with the API key
     client = OpenAI(api_key=openai_api_key)
 
     prompt = (
@@ -61,19 +59,16 @@ def generate_questions(transcript: str) -> str:
 
 @question_generation.route("/generate-questions", methods=["POST"])
 def generate_questions_route():
-    # Check that a video file is provided
     if "video" not in request.files:
         return jsonify({"error": "No video file provided"}), 400
 
     video_file = request.files["video"]
 
-    # Save the uploaded video to a temporary file
     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp4") as temp_video:
         video_path = temp_video.name
         video_file.save(video_path)
 
     try:
-        # Extract transcript from the video using your helper function
         transcript_text = get_transcription(video_path)
     except Exception as e:
         if os.path.exists(video_path):
@@ -84,10 +79,8 @@ def generate_questions_route():
             os.remove(video_path)
 
     try:
-        # Generate questions based on the transcript
         questions_result = generate_questions(transcript_text)
     except Exception as e:
         return jsonify({"error": f"Error generating questions: {str(e)}"}), 500
 
-    # Return the generated questions as JSON
     return jsonify({"questions": questions_result}), 200

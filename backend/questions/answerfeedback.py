@@ -18,7 +18,6 @@ def judge_responses(questions, answers):
     if len(questions) != len(answers):
         raise ValueError("The number of questions and answers must be the same.")
 
-    # Construct a prompt that lists each question and its corresponding answer
     prompt_lines = [
         "Below are several questions along with the answers provided. Please evaluate each answer, highlighting strengths, identifying weaknesses, and suggesting improvements.",
         "Evaluation Criteria if applicable:",
@@ -32,22 +31,19 @@ def judge_responses(questions, answers):
     for idx, (q, a) in enumerate(zip(questions, answers), start=1):
         prompt_lines.append(f"Question {idx}: {q}")
         prompt_lines.append(f"Answer {idx}: {a}")
-        prompt_lines.append("")  # blank line for readability
+        prompt_lines.append("")
 
     prompt_text = "\n".join(prompt_lines)
 
-    # Compute the path to the root directory (one level up) to load the .env file
     root_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
     dotenv_path = os.path.join(root_dir, ".env")
     load_dotenv(dotenv_path)
 
-    # Retrieve the OpenAI API key from the .env file.
     openai_api_key = os.getenv("OPENAI_API_KEY")
     if not openai_api_key:
         print("Error: OPENAI_API_KEY not found in .env file.")
         sys.exit(1)
 
-    # Initialize the OpenAI client with the API key using the new format.
     client = OpenAI(api_key=openai_api_key)
 
     completion = client.chat.completions.create(
