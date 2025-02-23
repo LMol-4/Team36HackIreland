@@ -4,7 +4,7 @@ from .script_evaluation import get_feedback
 evaluation = Blueprint("evaluation", __name__)
 
 @evaluation.route("/evaluate_transcript", methods=["POST"])
-def get_feedback():
+def evaluate_transcript():
     if "transcription" not in request.files:
         return {"error": "No transcription provided"}, 400
 

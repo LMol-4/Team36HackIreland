@@ -1,7 +1,6 @@
 import os
 import sys
 import json
-import argparse
 from dotenv import load_dotenv
 from openai import OpenAI
 

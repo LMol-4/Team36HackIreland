@@ -29,7 +29,6 @@ def calculate_average_attention_score():
         frame_skip = 30  # Process every 30th frame
         frame_count = 0
 
-        print(f'Reached here!')
         while True:
             ret, frame = cap.read()
             if not ret:
