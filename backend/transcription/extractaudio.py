@@ -1,4 +1,3 @@
-import sys
 import moviepy.video.VideoClip as VideoFileClip
 def extract_audio_from_file(video_file, output_audio):
     try:
