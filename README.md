@@ -9,12 +9,12 @@
 - **📈 Real-Time Analytics**: Get insights into engagement, sentiment analysis, and areas for improvement.
 
 ## Tech Stack 🛠️
-- **Frontend**: [See frontend README]
-- **Backend**: [See backend README]
-- **AI Models**: 🤖 We used an AI API Key
+- **Frontend**: [See frontend README](https://github.com/LMol-4/Team36HackIreland/blob/main/frontend/README.md)
+- **Backend**: [See backend README](https://github.com/LMol-4/Team36HackIreland/blob/main/backend/README.md)
+- **AI Models**: 🤖 We used OpenAI's API
 
 ## Installation & Setup ⚙️
-For detailed setup instructions, please refer to the respective **frontend** and **backend** README files.
+For detailed setup instructions, please refer to the respective [frontend](https://github.com/LMol-4/Team36HackIreland/blob/main/frontend/README.md) and [backend](https://github.com/LMol-4/Team36HackIreland/blob/main/backend/README.md) README files.
 
 ## Contributors 👨‍💻👩‍💻
 This project was developed in **HackIreland 2025** by **Team 36**. Special thanks to all contributors who made this project possible! 🎉
