@@ -274,14 +274,14 @@ const Home = () => {
                 icon: Hand,
                 title: "Body Language",
                 description: "Appear confident with personalized recommendations on your body language.",
-                gradient: "from-cyan-500 to-teal-600",
+                gradient: "from-teal-500 to-cyan-600",
                 shadow: "shadow-cyan-200/50"
               },
               {
                 icon: HelpCircle,
                 title: "Q&A",
                 description: "Practice responding to thoughtful questions.",
-                gradient: "from-teal-500 to-cyan-600",
+                gradient: "from-cyan-500 to-teal-600",
                 shadow: "shadow-teal-200/50"
               },
             ].map((feature, index) => (
