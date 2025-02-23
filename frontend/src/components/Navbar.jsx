@@ -11,7 +11,7 @@ const Navbar = () => {
           </a>
         </div>
         <div className="flex space-x-8">
-          <a href="https://github.com/LMol-4/Team36HackIreland" className="text-gray-600 hover:text-emerald-600 transition-colors flex items-center space-x-2 p-2">
+          <a href="https://github.com/LMol-4/Team36HackIreland"  target="_blank" className="text-gray-600 hover:text-emerald-600 transition-colors flex items-center space-x-2 p-2">
             <FaGithub className="text-gray-600 transition-colors" size={20} />
             <span>Github</span>
           </a>
