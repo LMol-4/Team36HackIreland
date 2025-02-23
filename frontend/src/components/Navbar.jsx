@@ -1,4 +1,3 @@
-import { Video } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 
 const Navbar = () => {
@@ -7,8 +6,8 @@ const Navbar = () => {
       <div className="max-w-6xl mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-2">
           <a href="/" className="flex items-center space-x-2">
-            <Video className="text-emerald-600" />
-            <span className="text-xl font-semibold text-gray-800">PitchPerfect</span>
+            <img src="/circle-logo.png" alt="Circle Logo" className="h-8 w-8" />
+            <span className="text-xl font-semibold text-gray-800">Pitch Perfect</span>
           </a>
         </div>
         <div className="flex space-x-8">

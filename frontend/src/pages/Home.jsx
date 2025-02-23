@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Upload, FileText, AudioWaveform, Hand, Sparkles, PlayCircle, ChevronRight, Zap } from "lucide-react";
+import { Upload, FileText, HelpCircle, Hand, Sparkles, PlayCircle, Zap } from "lucide-react";
 
 const Home = () => {
   const [uploadedFile, setUploadedFile] = useState(null);
@@ -109,14 +109,13 @@ const Home = () => {
           animate="visible"
         >
           <motion.div 
-            className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-emerald-100 text-emerald-800 mb-6 hover:border-emerald-200 transition-colors"
+            className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border-2 border-emerald-100 text-emerald-800 mb-6 hover:border-emerald-200 transition-colors"
             variants={itemVariants}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <Sparkles size={16} className="text-emerald-600" />
             <span className="text-sm font-medium">AI-Powered Pitch Analysis</span>
-            <ChevronRight size={16} className="text-emerald-600" />
           </motion.div>
           
           <div className="max-w-4xl">
@@ -132,8 +131,8 @@ const Home = () => {
               className="text-lg text-gray-600 max-w-2xl mx-auto mb-8"
               variants={itemVariants}
             >
-              Upload your pitch video and get instant insights on your presentation skills, 
-              including transcript analysis, voice metrics, and gesture recommendations.
+              Upload a pitch and get instant insights on your presentation skills, <br />
+              including your script and body language.
             </motion.p>
             <motion.div 
               className="flex items-center justify-center gap-4 text-sm"
@@ -259,7 +258,7 @@ const Home = () => {
             className="text-center mb-12"
             variants={itemVariants}
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Comprehensive Analysis Features</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Comprehensive Analysis</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">Get detailed insights into every aspect of your presentation</p>
           </motion.div>
           
@@ -268,24 +267,24 @@ const Home = () => {
               {
                 icon: FileText,
                 title: "Smart Transcription",
-                description: "Get accurate transcripts with key phrases and talking points highlighted for improvement.",
+                description: "Get an accurate transcript with highlighted points of improvement.",
                 gradient: "from-emerald-500 to-teal-600",
                 shadow: "shadow-emerald-200/50"
               },
               {
-                icon: AudioWaveform,
-                title: "Voice Analysis",
-                description: "Receive feedback on pace, tone, clarity, and vocal variety to enhance your delivery.",
+                icon: Hand,
+                title: "Body Language",
+                description: "Appear confident with personalized recommendations on your body language.",
+                gradient: "from-cyan-500 to-teal-600",
+                shadow: "shadow-cyan-200/50"
+              },
+              {
+                icon: HelpCircle,
+                title: "Q&A",
+                description: "Practice responding to thoughtful questions.",
                 gradient: "from-teal-500 to-cyan-600",
                 shadow: "shadow-teal-200/50"
               },
-              {
-                icon: Hand,
-                title: "Gesture Coach",
-                description: "Get personalized recommendations on body language and gestures for maximum impact.",
-                gradient: "from-cyan-500 to-teal-600",
-                shadow: "shadow-cyan-200/50"
-              }
             ].map((feature, index) => (
               <motion.div
                 key={feature.title}
