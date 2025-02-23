@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import sys
-from moviepy import VideoFileClip
-
+import moviepy.video.VideoClip as VideoFileClip
 def extract_audio_from_file(video_file, output_audio):
     try:
         clip = VideoFileClip(video_file)

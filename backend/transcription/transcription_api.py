@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 import os
 import tempfile
-from get_transcription import get_transcription  # new helper that combines audio extraction & transcription
+from .get_transcription import get_transcription  # new helper that combines audio extraction & transcription
 
 transcription = Blueprint("transcription", __name__)
 

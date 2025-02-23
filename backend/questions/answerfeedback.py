@@ -66,17 +66,3 @@ def judge_responses(questions, answers):
     )
 
     return completion.choices[0].message
-
-if __name__ == "__main__":
-    # Example usage:
-    sample_questions = [
-        "What is your revenue model?",
-        "How do you plan to scale the business?"
-    ]
-    sample_answers = [
-        "We plan to use a subscription-based revenue model, targeting mid-sized businesses.",
-        "Our scaling strategy involves expanding to new markets and investing in technology."
-    ]
-
-    feedback = judge_responses(sample_questions, sample_answers)
-    print("Evaluator Feedback:\n", feedback)

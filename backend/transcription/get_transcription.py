@@ -1,7 +1,7 @@
 import os
 import tempfile
-from extractaudio import extract_audio_from_file
-from speechtotext import transcribe_audio
+from .extractaudio import extract_audio_from_file
+from .speechtotext import transcribe_audio
 
 def get_transcription(video_path: str) -> str:
     # Create a temporary file for the extracted audio.
