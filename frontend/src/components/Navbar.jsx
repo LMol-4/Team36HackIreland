@@ -1,4 +1,5 @@
 import { Video } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
 
 const Navbar = () => {
   return (
@@ -9,7 +10,10 @@ const Navbar = () => {
           <span className="text-xl font-semibold text-gray-800">PitchPerfect</span>
         </div>
         <div className="flex space-x-8">
-          <a href="#" className="text-gray-600 hover:text-emerald-600 transition-colors">Team 36</a>
+          <a href="https://github.com/LMol-4/Team36HackIreland" className="text-gray-600 hover:text-emerald-600 transition-colors flex items-center space-x-2">
+            <FaGithub />
+            <span>Github</span>
+          </a>
         </div>
       </div>
     </nav>
