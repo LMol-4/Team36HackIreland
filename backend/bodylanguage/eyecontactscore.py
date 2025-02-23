@@ -77,10 +77,12 @@ def calculate_average_attention_score():
             if not ret:
                 break
 
+            # skip frames for lower process load
             if frame_count % frame_skip != 0:
                 frame_count += 1
                 continue
 
+            # resize for faster processing
             frame = cv2.resize(frame, (640, 480))
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
@@ -92,7 +94,7 @@ def calculate_average_attention_score():
                 if len(eyes) >= 2:
                     attention_score = 100  # Full attention
                 else:
-                    attention_score = 50   # Partial attention
+                    attention_score = 50   # Partial attention - this would be chnaged with faster processor
 
             attention_scores.append(attention_score)
             frame_count += 1

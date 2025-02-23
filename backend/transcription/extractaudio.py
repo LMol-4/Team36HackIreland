@@ -10,11 +10,3 @@ def extract_audio_from_file(video_file, output_audio):
         print(f"Audio successfully extracted to {output_audio}")
     except Exception as e:
         print(f"Error extracting audio: {e}")
-
-if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage: python extractaudio.py input_video.mp4 output_audio.mp3")
-        sys.exit(1)
-    video_file = sys.argv[1]
-    output_audio = sys.argv[2]
-    extract_audio_from_file(video_file, output_audio)
