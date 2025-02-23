@@ -1,31 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useLocation, useNavigate } from "react-router-dom";
-import { PlayCircle } from "lucide-react";
 
 const Feedback = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [attentionScore, setAttentionScore] = useState(null);
+  const [feedback, setFeedback] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [questions, setQuestions] = useState(null);
+  const [questions, setQuestions] = useState([]);
   const [loadingQuestions, setLoadingQuestions] = useState(false);
+  const [error, setError] = useState(null);
 
   // Retrieve the uploaded file passed from the Home page
   const file = location.state?.file;
 
   useEffect(() => {
     if (!file) {
-      // If no file exists in state, redirect back to Home
       navigate("/", { replace: true });
       return;
     }
 
-    // Prepare form data with the video file for attention score calculation
     const formData = new FormData();
     formData.append("video", file);
 
-    // POST request to calculate the attention score
+    // POST request to calculate attention score and get feedback transcript
     fetch("http://127.0.0.1:5000/contact-score", {
       method: "POST",
       body: formData,
@@ -33,10 +32,12 @@ const Feedback = () => {
       .then((res) => res.json())
       .then((data) => {
         setAttentionScore(data.attention_score);
+        setFeedback(data.feedback);
         setLoading(false);
       })
       .catch((err) => {
         console.error("Error processing video:", err);
+        setError("Error processing video.");
         setLoading(false);
       });
   }, [file, navigate]);
@@ -46,20 +47,36 @@ const Feedback = () => {
     const formData = new FormData();
     formData.append("video", file);
 
-    // POST request to your question-generation endpoint
+    // POST request to the question-generation endpoint
     fetch("http://127.0.0.1:5000/question_generation/generate-questions", {
       method: "POST",
       body: formData,
     })
       .then((res) => res.json())
       .then((data) => {
-        setQuestions(data.questions);
+        // If questions are returned as objects, extract the text; otherwise, use as-is.
+        if (Array.isArray(data.questions)) {
+          setQuestions(
+            data.questions.map((q) =>
+              typeof q === "object" && q !== null && q.question ? q.question : q
+            )
+          );
+        } else {
+          console.error("Unexpected questions format:", data);
+          setError("Unexpected questions format received.");
+        }
         setLoadingQuestions(false);
       })
       .catch((err) => {
         console.error("Error generating questions:", err);
+        setError("Error generating questions.");
         setLoadingQuestions(false);
       });
+  };
+
+  // Navigate to the answer page with the selected question text.
+  const handleAnswer = (questionText) => {
+    navigate("/answer", { state: { question: questionText } });
   };
 
   return (
@@ -107,17 +124,24 @@ const Feedback = () => {
           transition={{ duration: 0.6 }}
         >
           <motion.h1 className="text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700">
-            Video Analysis Feedback
+            Video Feedback
           </motion.h1>
           {loading ? (
             <motion.p className="text-lg text-gray-600">
               Processing your video, please wait...
             </motion.p>
+          ) : error ? (
+            <motion.p className="text-lg text-red-600">{error}</motion.p>
           ) : (
             <motion.div>
-              <motion.p className="text-xl text-gray-800 mb-4">
+              <motion.p className="text-xl text-gray-800 mb-2">
                 Your Attention Score: <strong>{attentionScore}</strong>
               </motion.p>
+              {feedback && (
+                <motion.p className="text-lg text-gray-700 mb-4">
+                  <strong>Feedback:</strong> {feedback}
+                </motion.p>
+              )}
               <motion.button
                 onClick={() => navigate("/")}
                 className="px-6 py-2 bg-emerald-600 text-white rounded-lg shadow hover:bg-emerald-700 transition mb-4"
@@ -130,12 +154,29 @@ const Feedback = () => {
               >
                 {loadingQuestions ? "Loading Questions..." : "Get Questions"}
               </motion.button>
-              {questions && (
+              {questions && questions.length > 0 && (
                 <motion.div className="mt-6 bg-white p-4 rounded-lg shadow max-w-xl">
-                  <h2 className="text-2xl font-semibold mb-2">Generated Questions:</h2>
-                  <pre className="text-sm text-gray-700 whitespace-pre-wrap">
-                    {JSON.stringify(questions, null, 2)}
-                  </pre>
+                  <h2 className="text-2xl font-semibold mb-4">
+                    Generated Questions:
+                  </h2>
+                  <ol className="list-decimal ml-6 text-left space-y-4">
+                    {questions.map((questionText, index) => (
+                      <li
+                        key={index}
+                        className="relative group p-2 border rounded-md border-gray-200 hover:shadow-lg transition"
+                      >
+                        <p>{questionText}</p>
+                        <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center opacity-0 group-hover:opacity-100 transition duration-300">
+                          <button
+                            onClick={() => handleAnswer(questionText)}
+                            className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                          >
+                            Answer
+                          </button>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
                 </motion.div>
               )}
             </motion.div>

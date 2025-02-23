@@ -31,20 +31,3 @@ def transcribe_audio(audio_file):
         print(f"Error transcribing audio: {e}")
         sys.exit(1)
 
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python speechtotext.py input_audio_file [output_text_file]")
-        sys.exit(1)
-    audio_file = sys.argv[1]
-    output_file = sys.argv[2] if len(sys.argv) > 2 else "transcription.txt"
-
-    result = transcribe_audio(audio_file)
-    transcript_text = getattr(result, "text", None) or result.get("text", "")
-
-    try:
-        with open(output_file, "w", encoding="utf-8") as f:
-            f.write(transcript_text)
-        print(f"Transcript successfully written to {output_file}")
-    except Exception as e:
-        print(f"Error writing transcript to file: {e}")
-        sys.exit(1)

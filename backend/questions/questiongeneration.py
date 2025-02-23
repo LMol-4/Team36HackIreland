@@ -1,6 +1,8 @@
 import sys
 import os
 import tempfile
+import json
+import re
 from flask import Blueprint, request, jsonify
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -8,9 +10,30 @@ from transcription.get_transcription import get_transcription  # Helper for audi
 
 question_generation = Blueprint("question_generation", __name__)
 
+def extract_json_from_markdown(markdown_str: str) -> dict:
+    """
+    Extracts JSON content from a markdown code block.
+    It looks for content wrapped between ```json and ``` markers.
+    """
+    pattern = r"```json\s*(.*?)\s*```"
+    match = re.search(pattern, markdown_str, re.DOTALL)
+    if match:
+        json_str = match.group(1)
+    else:
+        # If not found, assume the entire string is JSON.
+        json_str = markdown_str.strip()
+
+    try:
+        return json.loads(json_str)
+    except Exception as e:
+        print("Error parsing JSON from markdown:", e)
+        print("Attempted JSON string:", json_str)
+        return None
+
+
 def generate_questions(transcript: str) -> str:
     """
-    Given a pitch transcript, uses the GPT-4o-mini model to generate a JSON-formatted
+    Given a pitch transcript, uses the GPT-4o model to generate a JSON-formatted
     numbered list of 10 questions that investors or judges might ask.
     """
     # Load the .env file from the root directory (one level up)
@@ -43,7 +66,7 @@ def generate_questions(transcript: str) -> str:
     )
 
     completion = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-4o",
         messages=[
             {
                 "role": "system",
@@ -57,7 +80,8 @@ def generate_questions(transcript: str) -> str:
         max_tokens=2000,
     )
 
-    return completion.choices[0].message
+    # Return the ChatCompletionMessage object as a string
+    return completion.choices[0].message.content
 
 @question_generation.route("/generate-questions", methods=["POST"])
 def generate_questions_route():
@@ -86,8 +110,12 @@ def generate_questions_route():
     try:
         # Generate questions based on the transcript
         questions_result = generate_questions(transcript_text)
+        # Extract and parse the JSON from the markdown formatted response
+        questions_json = extract_json_from_markdown(questions_result)
+        if questions_json is None:
+            return jsonify({"error": "Failed to parse questions JSON"}), 500
     except Exception as e:
         return jsonify({"error": f"Error generating questions: {str(e)}"}), 500
 
     # Return the generated questions as JSON
-    return jsonify({"questions": questions_result}), 200
+    return jsonify(questions_json), 200
