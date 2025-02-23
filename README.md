@@ -16,6 +16,9 @@
 ## Installation & Setup ⚙️
 For detailed setup instructions, please refer to the respective [frontend](https://github.com/LMol-4/Team36HackIreland/blob/main/frontend/README.md) and [backend](https://github.com/LMol-4/Team36HackIreland/blob/main/backend/README.md) README files.
 
+## DevPost
+https://devpost.com/software/pitchperfect-xnce5v
+
 ## Contributors 👨‍💻👩‍💻
 This project was developed in **HackIreland 2025** by **Team 36**. Special thanks to all contributors who made this project possible! 🎉
 
