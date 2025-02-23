@@ -281,7 +281,7 @@ const Home = () => {
                 icon: HelpCircle,
                 title: "Q&A",
                 description: "Practice responding to thoughtful questions.",
-                gradient: "from-cyan-500 to-teal-600",
+                gradient: "from-cyan-500 to-emerald-600",
                 shadow: "shadow-teal-200/50"
               },
             ].map((feature, index) => (
